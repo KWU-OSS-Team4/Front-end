@@ -15,13 +15,7 @@ class _NavigationState extends State<Navigation> {
   double _weight = 0.0;
   double _height = 0.0;
 
-  final screens = [
-    Calender(),
-    Diet(),
-    MainPage(),
-    alarm(),
-    Settings()
-  ];
+  final screens = [Calendar(), Diet(), MainPage(), alarm(), Settings()];
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +36,9 @@ class _NavigationState extends State<Navigation> {
           fontSize: 10,
           color: Colors.black,
         ),
-        onTap: (int index)=> 
-          setState(() {
-            _selectedIndex = index;
-          }),
+        onTap: (int index) => setState(() {
+          _selectedIndex = index;
+        }),
         items: [
           BottomNavigationBarItem(
               icon: Icon(

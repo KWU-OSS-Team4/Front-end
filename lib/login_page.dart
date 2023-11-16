@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:witheat/navigation.dart';
-import 'main_page.dart';
+import 'navigation.dart';
 import 'register_page.dart';
 
 class LogIn extends StatefulWidget {

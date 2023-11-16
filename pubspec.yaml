@@ -1,14 +1,19 @@
 name: witheat
 description: A new Flutter project.
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.1.5 <4.0.0'
+  sdk: ">=3.1.5 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+
+  table_calendar: ^3.0.8
+  intl: 0.18.1
+  drift: ^2.3.0
+  fl_chart: ^0.64.0
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +22,18 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: Agbalumo
+      fonts:
+        - asset: assets/fonts/Agbalumo-Regular.ttf
+
+    - family: PoiretOne
+      fonts:
+        - asset: assets/fonts/PoiretOne-Regular.ttf
+
+    - family: godo
+      fonts:
+        - asset: assets/fonts/GodoM.ttf
