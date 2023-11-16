@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:witheat/login_page.dart';
-import 'navigation.dart';
+import 'login_page.dart';
 
 void main() => runApp(const MyApp());
 
