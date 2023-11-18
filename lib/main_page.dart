@@ -36,6 +36,7 @@ class _MainPageState extends State<MainPage> {
         elevation: 0.0,
         backgroundColor: CupertinoColors.white,
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: Row(
         children: [

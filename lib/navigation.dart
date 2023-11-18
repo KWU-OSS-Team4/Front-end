@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:witheat/login_page.dart';
 import 'Calender.dart';
 import 'Diet.dart';
 import 'alarm.dart';
-import 'settings.dart';
 import 'main_page.dart';
 
 class Navigation extends StatefulWidget {
@@ -15,7 +16,7 @@ class _NavigationState extends State<Navigation> {
   double _weight = 0.0;
   double _height = 0.0;
 
-  final screens = [Calendar(), Diet(), MainPage(), alarm(), Settings()];
+  final screens = [Calendar(), Diet(), MainPage(), alarm()];
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,38 @@ class _NavigationState extends State<Navigation> {
           color: Colors.black,
         ),
         onTap: (int index) => setState(() {
-          _selectedIndex = index;
+          if (index == 4) {
+            showCupertinoModalPopup(
+              context: context,
+              builder: (BuildContext context) {
+                return CupertinoActionSheet(
+                  title: Text('Settings'),
+                  actions: <Widget>[
+                    CupertinoActionSheetAction(
+                      onPressed: () {
+                        // 계속 스택을 쌓는식으로 진행되서 스택이 overflow 될 수도...
+                        // 근데 규모가 작은 앱이라 괜찮을 것 같기도...
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => LogIn()),
+                        );
+                      },
+                      child: Text('Log out'),
+                    ),
+                    // 메뉴 더 필요시 actions에 추가
+                  ],
+                  cancelButton: CupertinoActionSheetAction(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Cancel'),
+                  ),
+                );
+              },
+            );
+          } else {
+            _selectedIndex = index;
+          }
         }),
         items: [
           BottomNavigationBarItem(

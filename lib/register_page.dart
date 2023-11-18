@@ -62,7 +62,7 @@ class _RegisterState extends State<Register> {
                       TextField(
                         decoration:
                             InputDecoration(labelText: 'Add contents later...'),
-                        keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.text,
                       ),
                       SizedBox(
                         height: 40.0,

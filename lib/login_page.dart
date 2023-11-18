@@ -26,6 +26,7 @@ class _LogInState extends State<LogIn> {
         elevation: 0.0,
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: [
