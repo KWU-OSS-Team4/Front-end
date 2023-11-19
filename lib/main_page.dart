@@ -43,7 +43,7 @@ class _MainPageState extends State<MainPage> {
           Column(
             children: [
               Container(
-                padding: EdgeInsets.all(2.0),
+                //padding: EdgeInsets.all(2.0),
                 margin: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 15.0),
                 width: 180,
                 height: 50,
@@ -60,49 +60,59 @@ class _MainPageState extends State<MainPage> {
                       '몸무게: $_weight',
                       style: TextStyle(
                         fontFamily: 'godo',
-                        fontSize: 20.0,
+                        fontSize: 17.0,
                       ),
                     ),
                     Text(
                       '신장: $_height',
                       style: TextStyle(
                         fontFamily: 'godo',
-                        fontSize: 20.0,
+                        fontSize: 17.0,
                       ),
                     ),
                   ],
                 ),
               ),
-              Container(
-                padding: EdgeInsets.fromLTRB(0, 70.0, 0, 50.0),
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                width: 180.0,
-                height: 180.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: CupertinoColors.systemGrey5,
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      '하루 섭취량',
-                      style: TextStyle(
-                        fontFamily: 'godo',
-                        fontSize: 20.0,
-                        color: CupertinoColors.black,
+              GestureDetector(
+                /*
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => ()),
+                  );
+                },
+                */
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(0, 70.0, 0, 50.0),
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  width: 180.0,
+                  height: 180.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: CupertinoColors.systemGrey5,
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        '하루 섭취량',
+                        style: TextStyle(
+                          fontFamily: 'godo',
+                          fontSize: 17.0,
+                          color: CupertinoColors.black,
+                        ),
                       ),
-                    ),
-                    Text(
-                      '(kcal)',
-                      style: TextStyle(
-                        fontFamily: 'godo',
-                        fontSize: 20.0,
+                      Text(
+                        '(kcal)',
+                        style: TextStyle(
+                          fontFamily: 'godo',
+                          fontSize: 17.0,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                  ],
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -229,7 +239,7 @@ class _MainPageState extends State<MainPage> {
                       //'알람: $_hour : $_min',
                       style: TextStyle(
                         fontFamily: 'godo',
-                        fontSize: 20.0,
+                        fontSize: 17.0,
                       ),
                     ),
                   ],
@@ -260,7 +270,7 @@ class _MainPageState extends State<MainPage> {
                       'Diet Here',
                       style: TextStyle(
                         fontFamily: 'godo',
-                        fontSize: 20.0,
+                        fontSize: 17.0,
                       ),
                     ),
                   ],
@@ -276,7 +286,7 @@ class _MainPageState extends State<MainPage> {
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 16,
+      fontSize: 14.0,
     );
     Widget text;
     switch (value.toInt()) {
@@ -315,18 +325,19 @@ class _MainPageState extends State<MainPage> {
   Widget leftTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 15,
+      fontFamily: 'godo',
+      fontSize: 14.0,
     );
     String text;
     switch (value.toInt()) {
       case 1:
-        text = '  55';
+        text = ' 55';
         break;
       case 3:
-        text = '  60';
+        text = ' 60';
         break;
       case 5:
-        text = '  65';
+        text = ' 65';
         break;
       default:
         return Container();

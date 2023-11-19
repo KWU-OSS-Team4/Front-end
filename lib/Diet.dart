@@ -12,7 +12,7 @@ class Diet extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: Column(children: [
         Container(
-          padding: EdgeInsets.all(40.0),
+          padding: EdgeInsets.all(20.0),
           child: Column(children: [
             SizedBox(height: 40),
             ElevatedButton.icon(

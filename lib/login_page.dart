@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'navigation.dart';
 import 'register_page.dart';
 
+import 'package:http/http.dart'; // http패키지를 사용하여 서버와 통신
+
 class LogIn extends StatefulWidget {
   @override
   State<LogIn> createState() => _LogInState();
