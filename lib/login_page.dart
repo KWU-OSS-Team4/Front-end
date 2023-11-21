@@ -47,12 +47,27 @@ class _LogInState extends State<LogIn> {
                   child: Column(
                     children: [
                       TextField(
-                        decoration: InputDecoration(labelText: 'Enter email'),
+                        cursorColor: Color.fromARGB(255, 9, 162, 37),
+                        decoration: InputDecoration(
+                          labelText: 'Enter email',
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromARGB(255, 9, 162, 37),
+                            ),
+                          ),
+                        ),
                         keyboardType: TextInputType.emailAddress,
                       ),
                       TextField(
-                        decoration:
-                            InputDecoration(labelText: 'Enter password'),
+                        cursorColor: Color.fromARGB(255, 9, 162, 37),
+                        decoration: InputDecoration(
+                          labelText: 'Enter password',
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromARGB(255, 9, 162, 37),
+                            ),
+                          ),
+                        ),
                         keyboardType: TextInputType.text,
                         obscureText: true,
                       ),

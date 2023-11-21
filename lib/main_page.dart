@@ -8,98 +8,20 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  Duration duration = const Duration(hours: 1, minutes: 23);
+  int touchedIndex = -1;
   double _weight = 0.0;
   double _height = 0.0;
   int _hour = 12;
   int _min = 59;
+  double _carboHydrate = 0.0;
+  double _protein = 0.0;
+  double _fat = 0.0;
 
   List<Color> gradientColors = [
     Color.fromARGB(255, 9, 162, 37),
     Color.fromARGB(255, 18, 189, 109),
   ];
-
-  void EnterUserInfo() {
-    showDialog(
-        context: context,
-        //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            //Dialog Main Title
-            title: Column(
-              children: <Widget>[
-                new Text(
-                  "몸무게/신장 수정",
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 60, 60, 60),
-                    fontFamily: 'godo',
-                    fontSize: 17.0,
-                  ),
-                ),
-              ],
-            ),
-            //
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                TextField(
-                  cursorColor: Color.fromARGB(255, 9, 162, 37),
-                  decoration: InputDecoration(
-                    labelText: '몸무게 입력: ',
-                    labelStyle: TextStyle(
-                      color: Color.fromARGB(255, 60, 60, 60),
-                      fontFamily: 'godo',
-                      fontSize: 17.0,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color.fromARGB(255, 9, 162, 37),
-                      ),
-                    ),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                TextField(
-                  cursorColor: Color.fromARGB(255, 9, 162, 37),
-                  decoration: InputDecoration(
-                    labelText: '신장 입력: ',
-                    labelStyle: TextStyle(
-                      color: Color.fromARGB(255, 60, 60, 60),
-                      fontFamily: 'godo',
-                      fontSize: 17.0,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color.fromARGB(255, 9, 162, 37),
-                      ),
-                    ),
-                  ),
-                  keyboardType: TextInputType.text,
-                ),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: new Text(
-                  "확인",
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 9, 162, 37),
-                    fontFamily: 'godo',
-                    fontSize: 17.0,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          );
-        });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,14 +49,6 @@ class _MainPageState extends State<MainPage> {
             children: [
               GestureDetector(
                 onTap: () => EnterUserInfo(),
-                /*
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => ()),
-                  );
-                },
-                */
                 child: Container(
                   //padding: EdgeInsets.all(2.0),
                   margin: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 15.0),
@@ -172,47 +86,115 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
               ),
-              GestureDetector(
-                /*
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => ()),
-                  );
-                },
-                */
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(0, 70.0, 0, 50.0),
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  width: 180.0,
-                  height: 180.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: CupertinoColors.systemGrey5,
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        '하루 섭취량',
-                        style: TextStyle(
-                          fontFamily: 'godo',
-                          fontSize: 17.0,
-                          color: CupertinoColors.black,
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: 180,
+                    height: 180,
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: PieChart(
+                        PieChartData(
+                          pieTouchData: PieTouchData(
+                            touchCallback:
+                                (FlTouchEvent event, pieTouchResponse) {
+                              setState(() {
+                                if (!event.isInterestedForInteractions ||
+                                    pieTouchResponse == null ||
+                                    pieTouchResponse.touchedSection == null) {
+                                  touchedIndex = -1;
+                                  return;
+                                }
+                                touchedIndex = pieTouchResponse
+                                    .touchedSection!.touchedSectionIndex;
+                              });
+                            },
+                          ),
+                          borderData: FlBorderData(
+                            show: false,
+                          ),
+                          sectionsSpace: 5,
+                          centerSpaceRadius: 85,
+                          sections: showingSections(),
                         ),
                       ),
-                      Text(
-                        '(kcal)',
-                        style: TextStyle(
-                          fontFamily: 'godo',
-                          fontSize: 17.0,
+                    ),
+                  ),
+                  Positioned(
+                    top: 5,
+                    child: GestureDetector(
+                      onTap: () => showCupertinoModalPopup<void>(
+                        context: context,
+                        builder: (BuildContext context) => Container(
+                          height: 216,
+                          padding: const EdgeInsets.only(top: 6.0),
+                          // The bottom margin is provided to align the popup above the system
+                          // navigation bar.
+                          margin: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom,
+                          ),
+                          // Provide a background color for the popup.
+                          color: CupertinoColors.systemBackground
+                              .resolveFrom(context),
+                          // Use a SafeArea widget to avoid system overlaps.
+                          child: SafeArea(
+                            top: false,
+                            child: CupertinoTimerPicker(
+                              mode: CupertinoTimerPickerMode.hm,
+                              initialTimerDuration: duration,
+                              // This is called when the user changes the timer's
+                              // duration.
+                              onTimerDurationChanged: (Duration newDuration) {
+                                setState(() => duration = newDuration);
+                              },
+                            ),
+                          ),
                         ),
                       ),
-                      SizedBox(
-                        height: 10.0,
+                      /*
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => ()),
+                        );
+                      },
+                      */
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(0, 65.0, 0, 45.0),
+                        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        width: 170.0,
+                        height: 170.0,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: CupertinoColors.systemGrey5,
+                        ),
+                        child: Column(
+                          children: [
+                            Text(
+                              '하루 섭취량',
+                              style: TextStyle(
+                                fontFamily: 'godo',
+                                fontSize: 17.0,
+                                color: CupertinoColors.black,
+                              ),
+                            ),
+                            Text(
+                              '(kcal)',
+                              style: TextStyle(
+                                fontFamily: 'godo',
+                                fontSize: 17.0,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
               SizedBox(
                 height: 20,
@@ -349,7 +331,76 @@ class _MainPageState extends State<MainPage> {
           Column(
             children: [
               SizedBox(
-                height: 275,
+                height: 180,
+              ),
+              Container(
+                width: 170,
+                height: 15,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.square_rounded,
+                      color: Color.fromARGB(255, 5, 78, 21),
+                      size: 13.0,
+                    ),
+                    Text(
+                      '탄수화물: $_carboHydrate',
+                      style: TextStyle(
+                        fontFamily: 'godo',
+                        fontSize: 13.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                width: 170,
+                height: 15,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.square_rounded,
+                      color: Color.fromARGB(255, 16, 145, 7),
+                      size: 13.0,
+                    ),
+                    Text(
+                      '단백질: $_protein',
+                      style: TextStyle(
+                        fontFamily: 'godo',
+                        fontSize: 13.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                width: 170,
+                height: 15,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.square_rounded,
+                      color: Color.fromARGB(255, 7, 194, 54),
+                      size: 13.0,
+                    ),
+                    Text(
+                      '지방: $_fat',
+                      style: TextStyle(
+                        fontFamily: 'godo',
+                        fontSize: 13.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 40,
               ),
               Container(
                 padding: EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 80.0),
@@ -443,5 +494,120 @@ class _MainPageState extends State<MainPage> {
     }
 
     return Text(text, style: style, textAlign: TextAlign.left);
+  }
+
+  List<PieChartSectionData> showingSections() {
+    return List.generate(3, (i) {
+      final radius = 5.0;
+      switch (i) {
+        case 0:
+          return PieChartSectionData(
+            color: Color.fromARGB(255, 5, 78, 21),
+            value: 40,
+            title: '',
+            radius: radius,
+          );
+        case 1:
+          return PieChartSectionData(
+            color: Color.fromARGB(255, 16, 145, 7),
+            value: 30,
+            title: '',
+            radius: radius,
+          );
+        case 2:
+          return PieChartSectionData(
+            color: Color.fromARGB(255, 7, 194, 54),
+            value: 30,
+            title: '',
+            radius: radius,
+          );
+
+        default:
+          throw Error();
+      }
+    });
+  }
+
+  void EnterUserInfo() {
+    showDialog(
+        context: context,
+        //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            //Dialog Main Title
+            title: Column(
+              children: <Widget>[
+                new Text(
+                  "몸무게/신장 수정",
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 39, 39, 39),
+                    fontFamily: 'godo',
+                    fontSize: 17.0,
+                  ),
+                ),
+              ],
+            ),
+            //
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextField(
+                  cursorColor: Color.fromARGB(255, 9, 162, 37),
+                  decoration: InputDecoration(
+                    labelText: '몸무게 입력: ',
+                    labelStyle: TextStyle(
+                      color: Color.fromARGB(255, 39, 39, 39),
+                      fontFamily: 'godo',
+                      fontSize: 17.0,
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromARGB(255, 9, 162, 37),
+                      ),
+                    ),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                TextField(
+                  cursorColor: Color.fromARGB(255, 9, 162, 37),
+                  decoration: InputDecoration(
+                    labelText: '신장 입력: ',
+                    labelStyle: TextStyle(
+                      color: Color.fromARGB(255, 39, 39, 39),
+                      fontFamily: 'godo',
+                      fontSize: 17.0,
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromARGB(255, 9, 162, 37),
+                      ),
+                    ),
+                  ),
+                  keyboardType: TextInputType.text,
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: new Text(
+                  "확인",
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 9, 162, 37),
+                    fontFamily: 'godo',
+                    fontSize: 17.0,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
   }
 }
