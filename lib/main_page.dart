@@ -18,6 +18,89 @@ class _MainPageState extends State<MainPage> {
     Color.fromARGB(255, 18, 189, 109),
   ];
 
+  void EnterUserInfo() {
+    showDialog(
+        context: context,
+        //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            //Dialog Main Title
+            title: Column(
+              children: <Widget>[
+                new Text(
+                  "몸무게/신장 수정",
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 60, 60, 60),
+                    fontFamily: 'godo',
+                    fontSize: 17.0,
+                  ),
+                ),
+              ],
+            ),
+            //
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextField(
+                  cursorColor: Color.fromARGB(255, 9, 162, 37),
+                  decoration: InputDecoration(
+                    labelText: '몸무게 입력: ',
+                    labelStyle: TextStyle(
+                      color: Color.fromARGB(255, 60, 60, 60),
+                      fontFamily: 'godo',
+                      fontSize: 17.0,
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromARGB(255, 9, 162, 37),
+                      ),
+                    ),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                TextField(
+                  cursorColor: Color.fromARGB(255, 9, 162, 37),
+                  decoration: InputDecoration(
+                    labelText: '신장 입력: ',
+                    labelStyle: TextStyle(
+                      color: Color.fromARGB(255, 60, 60, 60),
+                      fontFamily: 'godo',
+                      fontSize: 17.0,
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromARGB(255, 9, 162, 37),
+                      ),
+                    ),
+                  ),
+                  keyboardType: TextInputType.text,
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: new Text(
+                  "확인",
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 9, 162, 37),
+                    fontFamily: 'godo',
+                    fontSize: 17.0,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,35 +125,51 @@ class _MainPageState extends State<MainPage> {
         children: [
           Column(
             children: [
-              Container(
-                //padding: EdgeInsets.all(2.0),
-                margin: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 15.0),
-                width: 180,
-                height: 50,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: CupertinoColors.systemGrey5,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
+              GestureDetector(
+                onTap: () => EnterUserInfo(),
+                /*
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => ()),
+                  );
+                },
+                */
+                child: Container(
+                  //padding: EdgeInsets.all(2.0),
+                  margin: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 15.0),
+                  width: 180,
+                  height: 50,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: CupertinoColors.systemGrey5,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
                   ),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      '몸무게: $_weight',
-                      style: TextStyle(
-                        fontFamily: 'godo',
-                        fontSize: 17.0,
-                      ),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisAlignment:
+                          MainAxisAlignment.center, // 이게 Text()들을 수직방향으로 중앙 정렬
+                      children: [
+                        Text(
+                          '몸무게: $_weight',
+                          style: TextStyle(
+                            fontFamily: 'godo',
+                            fontSize: 17.0,
+                          ),
+                        ),
+                        Text(
+                          '신장: $_height',
+                          style: TextStyle(
+                            fontFamily: 'godo',
+                            fontSize: 17.0,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      '신장: $_height',
-                      style: TextStyle(
-                        fontFamily: 'godo',
-                        fontSize: 17.0,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
               GestureDetector(
