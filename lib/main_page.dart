@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'feedback.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -124,42 +125,12 @@ class _MainPageState extends State<MainPage> {
                   Positioned(
                     top: 5,
                     child: GestureDetector(
-                      onTap: () => showCupertinoModalPopup<void>(
-                        context: context,
-                        builder: (BuildContext context) => Container(
-                          height: 216,
-                          padding: const EdgeInsets.only(top: 6.0),
-                          // The bottom margin is provided to align the popup above the system
-                          // navigation bar.
-                          margin: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom,
-                          ),
-                          // Provide a background color for the popup.
-                          color: CupertinoColors.systemBackground
-                              .resolveFrom(context),
-                          // Use a SafeArea widget to avoid system overlaps.
-                          child: SafeArea(
-                            top: false,
-                            child: CupertinoTimerPicker(
-                              mode: CupertinoTimerPickerMode.hm,
-                              initialTimerDuration: duration,
-                              // This is called when the user changes the timer's
-                              // duration.
-                              onTimerDurationChanged: (Duration newDuration) {
-                                setState(() => duration = newDuration);
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      /*
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (_) => ()),
+                          MaterialPageRoute(builder: (_) => Feedbacks()),
                         );
                       },
-                      */
                       child: Container(
                         padding: EdgeInsets.fromLTRB(0, 65.0, 0, 45.0),
                         margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
