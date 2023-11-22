@@ -54,7 +54,10 @@ class _NavigationState extends State<Navigation> {
                           MaterialPageRoute(builder: (_) => LogIn()),
                         );
                       },
-                      child: Text('Log out'),
+                      child: Text(
+                        'Log out',
+                        style: TextStyle(color: CupertinoColors.systemGreen),
+                      ),
                     ),
                     // 메뉴 더 필요시 actions에 추가
                   ],
@@ -62,7 +65,10 @@ class _NavigationState extends State<Navigation> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('Cancel'),
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(color: CupertinoColors.systemGreen),
+                    ),
                   ),
                 );
               },
