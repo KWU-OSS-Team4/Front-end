@@ -1,12 +1,12 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class alarm extends StatefulWidget {
   @override
   State<alarm> createState() => _alarm();
 }
-
-
 
 class _alarm extends State<alarm>{
  static const int water = 7200;
@@ -21,6 +21,106 @@ bool _aisRunning=false;
 late Timer wtimer;
 late Timer btimer;
 late Timer atimer;
+Duration wselected =Duration(hours: 2,minutes: 0,seconds: 0);
+Duration bselected =Duration(hours: 4,minutes: 0,seconds: 0);
+Duration aselected =Duration(hours: 14,minutes: 0,seconds: 0);
+
+void _wshowTimePicker(BuildContext context){
+  showCupertinoModalPopup(
+    context: context
+  , builder: (BuildContext context) {
+    return Container(
+      height: 200,
+      color: CupertinoColors.white,
+      child: Column(children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [CupertinoButton(child: Text("DONE"), onPressed: (){
+            Navigator.of(context).pop();
+          })],
+        ),
+        Expanded(
+          child: CupertinoTimerPicker(
+            mode: CupertinoTimerPickerMode.hms,
+            initialTimerDuration: wselected,
+            onTimerDurationChanged: (Duration duration){
+              setState(() {
+                wselected=duration;
+                watersec=wselected.inSeconds;
+              });
+            }
+          ),
+        )
+      ]),
+    );
+   }
+  );
+}
+
+void _bshowTimePicker(BuildContext context){
+  showCupertinoModalPopup(
+    context: context
+  , builder: (BuildContext context) {
+    return Container(
+      height: 200,
+      color: CupertinoColors.white,
+      child: Column(children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [CupertinoButton(child: Text("DONE"), onPressed: (){
+            Navigator.of(context).pop();
+          })],
+        ),
+        Expanded(
+          child: CupertinoTimerPicker(
+            mode: CupertinoTimerPickerMode.hms,
+            initialTimerDuration: bselected,
+            onTimerDurationChanged: (Duration duration){
+              setState(() {
+                bselected=duration;
+                betweensec=bselected.inSeconds;
+              });
+            }
+          ),
+        )
+      ]),
+    );
+   }
+  );
+}
+
+void _ashowTimePicker(BuildContext context){
+  showCupertinoModalPopup(
+    context: context
+  , builder: (BuildContext context) {
+    return Container(
+      height: 200,
+      color: CupertinoColors.white,
+      child: Column(children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [CupertinoButton(child: Text("DONE"), onPressed: (){
+            Navigator.of(context).pop();
+          })],
+        ),
+        Expanded(
+          child: CupertinoTimerPicker(
+            mode: CupertinoTimerPickerMode.hms,
+            initialTimerDuration: aselected,
+            onTimerDurationChanged: (Duration duration){
+              setState(() {
+                aselected=duration;
+                aftersec=aselected.inSeconds;
+              });
+            }
+          ),
+        )
+      ]),
+    );
+   }
+  );
+}
+
 
 String format(int seconds){
   var duration = Duration(seconds: seconds);
@@ -141,6 +241,7 @@ void aonPausePressed(){
   });
 }
 
+
 @override 
 Widget build(BuildContext context){ 
   return Scaffold(
@@ -159,7 +260,7 @@ Widget build(BuildContext context){
 
             )
             ,
-            padding: EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(10.0),
             child: Row(children: [
               Text("수분",style: TextStyle(color: Color.fromARGB(255, 12, 161, 70),fontSize: 30,fontWeight: FontWeight.w600),),
               
@@ -173,16 +274,16 @@ Widget build(BuildContext context){
               Text(format(watersec),
               style: TextStyle(
                 color: Color.fromARGB(255, 12, 161, 70),
-                fontSize: 45,
+                fontSize: 40,
                 fontWeight: FontWeight.w500
               ),
               ),
 
-              SizedBox(width: 30,),
+              SizedBox(width: 20,),
               Container(
                 child: Column(children: [
                   IconButton(
-                    iconSize: 30,
+                    iconSize: 25,
                     color: Color.fromARGB(255, 12, 161, 70),
                     onPressed: 
                       _wisRunning ? wonPausePressed : wonStartPressed,
@@ -192,13 +293,29 @@ Widget build(BuildContext context){
                         : Icons.play_circle_outlined,
                     ),
                   ),
-                  IconButton(
-                    iconSize: 30,
+                  //여기에 시간설정 기능추가 새로운 container,row로
+                  Container(
+                    child:Row(children: [
+                      IconButton(
+                    iconSize: 25,
                     onPressed: wresetTimer,
                     icon: Icon(
                       Icons.restore,
                       color: Color.fromARGB(255, 12, 161, 70),
                     ),
+                  ),
+                  IconButton(
+                    onPressed:
+                     //팝업 띄우기
+                     (){
+                      _wshowTimePicker(context);
+                  
+                     }
+                  ,iconSize: 25
+                  , icon: Icon(
+                    Icons.watch_later_outlined,
+                    color: Color.fromARGB(255, 12, 161, 70),))
+                    ]) ,
                   ),
                 ]),
               )
@@ -218,7 +335,7 @@ Widget build(BuildContext context){
 
             )
             ,
-            padding: EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(10.0),
             child: Row(children: [
               Text("공복",style: TextStyle(color: Color.fromARGB(255, 12, 161, 70),fontSize: 30,fontWeight: FontWeight.w600),),
               
@@ -232,15 +349,15 @@ Widget build(BuildContext context){
               Text(format(betweensec),
               style: TextStyle(
                 color: Color.fromARGB(255, 12, 161, 70),
-                fontSize: 45,
+                fontSize: 40,
                 fontWeight: FontWeight.w500
               ),
               ),
-              SizedBox(width: 30,),
+              SizedBox(width: 20,),
               Container(
                 child: Column(children: [
                   IconButton(
-                    iconSize: 30,
+                    iconSize: 25,
                     color: Color.fromARGB(255, 12, 161, 70),
                     onPressed: 
                       _bisRunning ? bonPausePressed : bonStartPressed,
@@ -250,14 +367,28 @@ Widget build(BuildContext context){
                         : Icons.play_circle_outlined,
                     ),
                   ),
-                  IconButton(
-                    iconSize: 30,
+                  Container(
+                    child: Row(children: [
+                      IconButton(
+                    iconSize: 25,
                     onPressed: bresetTimer,
                     icon: Icon(
                       Icons.restore,
                       color: Color.fromARGB(255, 12, 161, 70),
                     ),
                   ),
+                  IconButton(
+                    onPressed:
+                     //팝업 띄우기
+                     (){
+                      _bshowTimePicker(context);
+                     }
+                  ,iconSize: 25
+                  , icon: Icon(
+                    Icons.watch_later_outlined,
+                    color: Color.fromARGB(255, 12, 161, 70),))
+                    ]),
+                  )
                 ]),
               )
             ]),
@@ -275,7 +406,7 @@ Widget build(BuildContext context){
               
             )
             ,
-            padding: EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(10.0),
             child: Row(children: [
               Text("단식",style: TextStyle(color: Color.fromARGB(255, 12, 161, 70),fontSize: 30,fontWeight: FontWeight.w600),),
               SizedBox(
@@ -284,16 +415,16 @@ Widget build(BuildContext context){
               Text(format(aftersec),
               style: TextStyle(
                 color: Color.fromARGB(255, 12, 161, 70),
-                fontSize: 45,
+                fontSize: 40,
                 fontWeight: FontWeight.w500
               ),
               ),
-             SizedBox(width: 12,)
+             SizedBox(width: 7,)
              ,
               Container(
                 child: Column(children: [
                   IconButton(
-                    iconSize: 30,
+                    iconSize: 25,
                     color: Color.fromARGB(255, 12, 161, 70),
                     onPressed: 
                       _aisRunning ? aonPausePressed : aonStartPressed,
@@ -303,25 +434,38 @@ Widget build(BuildContext context){
                         : Icons.play_circle_outlined,
                     ),
                   ),
-                  IconButton(
-                    iconSize: 30,
+                  Container(
+                    child: Row(children: [
+                      IconButton(
+                    iconSize: 25,
                     onPressed: aresetTimer,
                     icon: Icon(
                       Icons.restore,
                       color: Color.fromARGB(255, 12, 161, 70),
                     ),
                   ),
+                   IconButton(
+                    onPressed:
+                     //팝업 띄우기
+                     (){
+                      _ashowTimePicker(context);
+                     }
+                  ,iconSize: 25
+                  , icon: Icon(
+                    Icons.watch_later_outlined,
+                    color: Color.fromARGB(255, 12, 161, 70),))
+                    ]),
+                  )
                 ]),
               )
             ]),
           )
         ]),
-      )
-      
-      
-
+       )
       ]
     ), 
     );
   }
 }
+
+
