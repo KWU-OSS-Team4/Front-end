@@ -1,13 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'navigation.dart';
 import 'register_page.dart';
-
-import 'package:http/http.dart'; // http패키지를 사용하여 서버와 통신
+import 'User.dart';
 
 class LogIn extends StatefulWidget {
   @override
   State<LogIn> createState() => _LogInState();
 }
+
+String checkid='';
+String checkpsd='';
 
 class _LogInState extends State<LogIn> {
   @override
@@ -49,14 +53,18 @@ class _LogInState extends State<LogIn> {
                       TextField(
                         cursorColor: Color.fromARGB(255, 9, 162, 37),
                         decoration: InputDecoration(
-                          labelText: 'Enter email',
+                          labelText: 'Enter Id',
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color.fromARGB(255, 9, 162, 37),
+                              //아이디 변화에 따라서 string에 입력받기
                             ),
                           ),
                         ),
                         keyboardType: TextInputType.emailAddress,
+                        onChanged: (value) {
+                          checkid=value;
+                        },
                       ),
                       TextField(
                         cursorColor: Color.fromARGB(255, 9, 162, 37),
@@ -65,11 +73,15 @@ class _LogInState extends State<LogIn> {
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color.fromARGB(255, 9, 162, 37),
+                              //비밀번호 변화에 따라서 string 에 입력받기
                             ),
                           ),
                         ),
                         keyboardType: TextInputType.text,
                         obscureText: true,
+                        onChanged: (value) {
+                          checkpsd=value;
+                        },
                       ),
                       SizedBox(
                         height: 30.0,
@@ -79,12 +91,42 @@ class _LogInState extends State<LogIn> {
                         height: 50.0,
                         child: ElevatedButton(
                           onPressed: () {
-                            // 일단은 연결이 어떻게 될지 몰라서
-                            // 바로 로그인되게
-                            Navigator.push(
+                            String filepath='$checkid.txt';
+                            File file=File(filepath);
+                            if(file.existsSync()==0){
+                              //id가 존재하지 않으면 아이디가 존재하지 않습니다 메세지
+                              ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('아이디가 존재하지 않습니다.'),
+          duration: Duration(seconds: 2),
+          backgroundColor: Color.fromARGB(255, 9, 162, 37),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+                            }else{
+                              String line='';
+                              line= readUserFromFile(filepath);
+                              User user = MakeUser(line);
+                              if(user.password!=checkpsd){
+                                //id가 존재하지만 password가 다르면 패스워드가 다릅니다 메세지
+                                ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('패스워드가 다릅니다.'),
+          duration: Duration(seconds: 2),
+          backgroundColor: Color.fromARGB(255, 9, 162, 37),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+                              }else{
+                                 //존재하고 paswword 도 같으면 로그인
+                              Navigator.push(
                               context,
                               MaterialPageRoute(builder: (_) => Navigation()),
                             );
+
+                              }
+                            }
+                           
                           },
                           child: Text(
                             'Log in',

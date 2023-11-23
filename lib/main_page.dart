@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'feedback.dart';
 
 class MainPage extends StatefulWidget {
@@ -18,8 +19,12 @@ class _MainPageState extends State<MainPage> {
   double _carboHydrate = 0.0;
   double _protein = 0.0;
   double _fat = 0.0;
+<<<<<<< HEAD
   int numSuccess = 0;
   int numFail = 0;
+=======
+  int carbonnum=0;
+>>>>>>> refs/remotes/origin/main
 
   List<Color> gradientColors = [
     Color.fromARGB(255, 9, 162, 37),
@@ -118,7 +123,7 @@ class _MainPageState extends State<MainPage> {
                               ),
                             ),
                             Text(
-                              '(kcal)',
+                              '$carbonnum kcal',
                               style: TextStyle(
                                 fontFamily: 'godo',
                                 fontSize: 17.0,
