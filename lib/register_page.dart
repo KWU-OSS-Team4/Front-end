@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:async';
-import 'dart:convert';
 
 class Register extends StatefulWidget {
   @override
@@ -14,28 +11,9 @@ class _RegisterState extends State<Register> {
 
   bool isEmailDuplicated = false;
 
-  // 이메일 중복 검사 함수
-  void validateEmail(String email) {
-    // 서버 연결 보고
-    // 일단 지금은 문장에 'a'가 들어가면 중복으로 간주
-    bool isDuplicated = email.contains('a');
-
-    setState(() {
-      isEmailDuplicated = isDuplicated;
-    });
-
-    if (isDuplicated) {
-      // Show a Snackbar message if the email is duplicated
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Email is already registered.'),
-          duration: Duration(seconds: 2),
-          backgroundColor: Color.fromARGB(255, 9, 162, 37),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-    }
-  }
+  String userName = '';
+  String email = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +58,11 @@ class _RegisterState extends State<Register> {
                   child: Column(
                     children: [
                       TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            userName = value;
+                          });
+                        },
                         cursorColor: Color.fromARGB(255, 9, 162, 37),
                         decoration: InputDecoration(
                           labelText: 'Enter Name',
@@ -92,6 +75,11 @@ class _RegisterState extends State<Register> {
                         keyboardType: TextInputType.text,
                       ),
                       TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            email = value;
+                          });
+                        },
                         // 이메일 중복 확인을 버튼을 누르는 식으로 할 지
                         // 사용자가 이메일 입력을 완료하면 알아서 중복 확인 후 메시지 띄울 지
                         cursorColor: Color.fromARGB(255, 9, 162, 37),
@@ -105,9 +93,13 @@ class _RegisterState extends State<Register> {
                         ),
                         keyboardType: TextInputType.emailAddress,
                         controller: _emailController,
-                        onChanged: validateEmail,
                       ),
                       TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            password = value;
+                          });
+                        },
                         cursorColor: Color.fromARGB(255, 9, 162, 37),
                         decoration: InputDecoration(
                           labelText: 'Enter Password',
