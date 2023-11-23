@@ -19,7 +19,12 @@ class _MainPageState extends State<MainPage> {
   double _carboHydrate = 0.0;
   double _protein = 0.0;
   double _fat = 0.0;
+<<<<<<< HEAD
+  int numSuccess = 0;
+  int numFail = 0;
+=======
   int carbonnum=0;
+>>>>>>> refs/remotes/origin/main
 
   List<Color> gradientColors = [
     Color.fromARGB(255, 9, 162, 37),
@@ -46,55 +51,20 @@ class _MainPageState extends State<MainPage> {
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
-      body: Row(
+      body: Column(
         children: [
-          Column(
+          SizedBox(
+            height: 20,
+          ),
+          Row(
             children: [
-              GestureDetector(
-                onTap: () => EnterUserInfo(),
-                child: Container(
-                  //padding: EdgeInsets.all(2.0),
-                  margin: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 15.0),
-                  width: 180,
-                  height: 50,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey5,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                  ),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Column(
-                      mainAxisAlignment:
-                          MainAxisAlignment.center, // 이게 Text()들을 수직방향으로 중앙 정렬
-                      children: [
-                        Text(
-                          '몸무게: $_weight',
-                          style: TextStyle(
-                            fontFamily: 'godo',
-                            fontSize: 17.0,
-                          ),
-                        ),
-                        Text(
-                          '신장: $_height',
-                          style: TextStyle(
-                            fontFamily: 'godo',
-                            fontSize: 17.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
               Stack(
                 alignment: Alignment.center,
                 children: [
                   Container(
-                    width: 180,
-                    height: 180,
+                    margin: EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
+                    width: 250,
+                    height: 250,
                     child: AspectRatio(
                       aspectRatio: 1,
                       child: PieChart(
@@ -118,7 +88,7 @@ class _MainPageState extends State<MainPage> {
                             show: false,
                           ),
                           sectionsSpace: 5,
-                          centerSpaceRadius: 85,
+                          centerSpaceRadius: 120,
                           sections: showingSections(),
                         ),
                       ),
@@ -134,10 +104,10 @@ class _MainPageState extends State<MainPage> {
                         );
                       },
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(0, 65.0, 0, 45.0),
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        width: 170.0,
-                        height: 170.0,
+                        padding: EdgeInsets.fromLTRB(0, 100.0, 0, 80.0),
+                        margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                        width: 240.0,
+                        height: 240.0,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: CupertinoColors.systemGrey5,
@@ -159,9 +129,6 @@ class _MainPageState extends State<MainPage> {
                                 fontSize: 17.0,
                               ),
                             ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
                           ],
                         ),
                       ),
@@ -170,234 +137,292 @@ class _MainPageState extends State<MainPage> {
                 ],
               ),
               SizedBox(
-                height: 20,
+                width: 20,
               ),
-              Flexible(
-                child: Container(
-                  width: 180,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey5,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
-                    ),
+              Column(
+                children: [
+                  SizedBox(
+                    height: 110,
                   ),
-                  child: LineChart(
-                    LineChartData(
-                      //backgroundColor: CupertinoColors.systemGrey6,
-                      gridData: FlGridData(
-                        show: true,
-                        drawVerticalLine: true,
-                        horizontalInterval: 1,
-                        verticalInterval: 1,
-                        getDrawingHorizontalLine: (value) {
-                          return const FlLine(
-                            color: CupertinoColors.systemGrey5,
-                            strokeWidth: 1,
-                          );
-                        },
-                        getDrawingVerticalLine: (value) {
-                          return const FlLine(
-                            color: CupertinoColors.systemGrey5,
-                            strokeWidth: 1,
-                          );
-                        },
-                      ),
-                      titlesData: FlTitlesData(
-                        show: true,
-                        rightTitles: const AxisTitles(
-                          sideTitles: SideTitles(showTitles: false),
+                  Container(
+                    width: 120,
+                    height: 15,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.square_rounded,
+                          color: Color.fromARGB(255, 5, 78, 21),
+                          size: 13.0,
                         ),
-                        topTitles: const AxisTitles(
-                          sideTitles: SideTitles(showTitles: false),
-                        ),
-                        bottomTitles: AxisTitles(
-                          sideTitles: SideTitles(
-                            showTitles: true,
-                            reservedSize: 30,
-                            interval: 1,
-                            getTitlesWidget: bottomTitleWidgets,
-                          ),
-                        ),
-                        leftTitles: AxisTitles(
-                          sideTitles: SideTitles(
-                            showTitles: true,
-                            interval: 1,
-                            getTitlesWidget: leftTitleWidgets,
-                            reservedSize: 30,
-                          ),
-                        ),
-                      ),
-                      borderData: FlBorderData(
-                        show: false,
-                        border: Border.all(
-                          color: const Color(0xff37434d),
-                        ),
-                      ),
-                      minX: 0,
-                      maxX: 11,
-                      minY: 0,
-                      maxY: 8,
-                      lineBarsData: [
-                        LineChartBarData(
-                          spots: const [
-                            FlSpot(0, 6),
-                            FlSpot(1.7, 5.7),
-                            FlSpot(3.4, 5.5),
-                            FlSpot(5.1, 4.6),
-                            FlSpot(6.8, 4.5),
-                            FlSpot(8.5, 3.7),
-                            FlSpot(10.2, 3.5),
-                          ],
-                          isCurved: true,
-                          gradient: LinearGradient(
-                            colors: gradientColors,
-                          ),
-                          barWidth: 5,
-                          isStrokeCapRound: true,
-                          dotData: const FlDotData(
-                            show: false,
-                          ),
-                          belowBarData: BarAreaData(
-                            show: true,
-                            gradient: LinearGradient(
-                              colors: gradientColors
-                                  .map((color) => color.withOpacity(0.3))
-                                  .toList(),
-                            ),
+                        Text(
+                          '탄수화물: $_carboHydrate',
+                          style: TextStyle(
+                            fontFamily: 'godo',
+                            fontSize: 13.0,
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 40.0),
-                width: 180,
-                height: 120,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: CupertinoColors.systemGrey5,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
+                  SizedBox(
+                    height: 5,
                   ),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      'Alarm Here',
-                      //'알람: $_hour : $_min',
-                      style: TextStyle(
-                        fontFamily: 'godo',
-                        fontSize: 17.0,
-                      ),
+                  Container(
+                    width: 120,
+                    height: 15,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.square_rounded,
+                          color: Color.fromARGB(255, 16, 145, 7),
+                          size: 13.0,
+                        ),
+                        Text(
+                          '단백질: $_protein',
+                          style: TextStyle(
+                            fontFamily: 'godo',
+                            fontSize: 13.0,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    width: 120,
+                    height: 15,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.square_rounded,
+                          color: Color.fromARGB(255, 7, 194, 54),
+                          size: 13.0,
+                        ),
+                        Text(
+                          '지방: $_fat',
+                          style: TextStyle(
+                            fontFamily: 'godo',
+                            fontSize: 13.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          Column(
-            children: [
-              SizedBox(
-                height: 180,
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 25.0),
+            //margin: EdgeInsets.fromLTRB(20.0, 10.0, 40.0, 15.0),
+            width: 370,
+            height: 70,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: CupertinoColors.systemGrey5,
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
               ),
-              Container(
-                width: 170,
-                height: 15,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.square_rounded,
-                      color: Color.fromARGB(255, 5, 78, 21),
-                      size: 13.0,
-                    ),
-                    Text(
-                      '탄수화물: $_carboHydrate',
-                      style: TextStyle(
-                        fontFamily: 'godo',
-                        fontSize: 13.0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                width: 170,
-                height: 15,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.square_rounded,
-                      color: Color.fromARGB(255, 16, 145, 7),
-                      size: 13.0,
-                    ),
-                    Text(
-                      '단백질: $_protein',
-                      style: TextStyle(
-                        fontFamily: 'godo',
-                        fontSize: 13.0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                width: 170,
-                height: 15,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.square_rounded,
-                      color: Color.fromARGB(255, 7, 194, 54),
-                      size: 13.0,
-                    ),
-                    Text(
-                      '지방: $_fat',
-                      style: TextStyle(
-                        fontFamily: 'godo',
-                        fontSize: 13.0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 80.0),
-                //margin: EdgeInsets.fromLTRB(20.0, 10.0, 40.0, 15.0),
-                width: 170,
-                height: 240,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: CupertinoColors.systemGrey5,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
+            ),
+            child: Column(
+              children: [
+                Text(
+                  '성공: $numSuccess  |  실패: $numFail',
+                  style: TextStyle(
+                    fontFamily: 'godo',
+                    fontSize: 17.0,
                   ),
                 ),
-                child: Column(
-                  children: [
-                    Text(
-                      'Diet Here',
-                      style: TextStyle(
-                        fontFamily: 'godo',
-                        fontSize: 17.0,
+              ],
+            ),
+          ),
+          Row(
+            children: [
+              Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: 100,
+                    width: 180,
+                    child: Flexible(
+                      child: Container(
+                        width: 180,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: CupertinoColors.systemGrey5,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        child: LineChart(
+                          LineChartData(
+                            //backgroundColor: CupertinoColors.systemGrey6,
+                            gridData: FlGridData(
+                              show: true,
+                              drawVerticalLine: true,
+                              horizontalInterval: 1,
+                              verticalInterval: 1,
+                              getDrawingHorizontalLine: (value) {
+                                return const FlLine(
+                                  color: CupertinoColors.systemGrey5,
+                                  strokeWidth: 1,
+                                );
+                              },
+                              getDrawingVerticalLine: (value) {
+                                return const FlLine(
+                                  color: CupertinoColors.systemGrey5,
+                                  strokeWidth: 1,
+                                );
+                              },
+                            ),
+                            titlesData: FlTitlesData(
+                              show: true,
+                              rightTitles: const AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                              topTitles: const AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                              bottomTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  reservedSize: 30,
+                                  interval: 1,
+                                  getTitlesWidget: bottomTitleWidgets,
+                                ),
+                              ),
+                              leftTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  interval: 1,
+                                  getTitlesWidget: leftTitleWidgets,
+                                  reservedSize: 30,
+                                ),
+                              ),
+                            ),
+                            borderData: FlBorderData(
+                              show: false,
+                              border: Border.all(
+                                color: const Color(0xff37434d),
+                              ),
+                            ),
+                            minX: 0,
+                            maxX: 11,
+                            minY: 0,
+                            maxY: 8,
+                            lineBarsData: [
+                              LineChartBarData(
+                                spots: const [
+                                  FlSpot(0, 6),
+                                  FlSpot(1.7, 5.7),
+                                  FlSpot(3.4, 5.5),
+                                  FlSpot(5.1, 4.6),
+                                  FlSpot(6.8, 4.5),
+                                  FlSpot(8.5, 3.7),
+                                  FlSpot(10.2, 3.5),
+                                ],
+                                isCurved: true,
+                                gradient: LinearGradient(
+                                  colors: gradientColors,
+                                ),
+                                barWidth: 5,
+                                isStrokeCapRound: true,
+                                dotData: const FlDotData(
+                                  show: false,
+                                ),
+                                belowBarData: BarAreaData(
+                                  show: true,
+                                  gradient: LinearGradient(
+                                    colors: gradientColors
+                                        .map((color) => color.withOpacity(0.3))
+                                        .toList(),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  GestureDetector(
+                    onTap: () => EnterUserInfo(),
+                    child: Container(
+                      //padding: EdgeInsets.all(2.0),
+                      margin: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 15.0),
+                      width: 180,
+                      height: 70,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: CupertinoColors.systemGrey5,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment
+                              .center, // 이게 Text()들을 수직방향으로 중앙 정렬
+                          children: [
+                            Text(
+                              '몸무게: $_weight',
+                              style: TextStyle(
+                                fontFamily: 'godo',
+                                fontSize: 17.0,
+                              ),
+                            ),
+                            Text(
+                              '신장: $_height',
+                              style: TextStyle(
+                                fontFamily: 'godo',
+                                fontSize: 17.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(0.0, 80.0, 0.0, 80.0),
+                    //margin: EdgeInsets.fromLTRB(20.0, 10.0, 40.0, 15.0),
+                    width: 170,
+                    height: 180,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: CupertinoColors.systemGrey5,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Diet Here',
+                          style: TextStyle(
+                            fontFamily: 'godo',
+                            fontSize: 17.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
