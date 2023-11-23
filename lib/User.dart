@@ -21,7 +21,7 @@ class User {
 }
 String forfuture='';
 late String _filePath;
-
+User chuser=User('','','','',0,0,0,0,0);
 // ignore: unused_element
 Future<void> initFilePath(String pathname) async {
     // 애플리케이션의 저장소 디렉토리 경로를 얻기
@@ -45,7 +45,7 @@ Future<void> initFilePath(String pathname) async {
   }
   
 //경로를 입력해서 파일에 저장하는 함수 로그인 기능및 회원가입 기능에 사용
-Future<void> saveUserToFile(User user, String filePath) async {
+Future<void> saveUserToFile(String user, String filePath) async {
   final line = user.toString();
   Directory appDocDir = await getApplicationDocumentsDirectory();
     _filePath = '${appDocDir.path}/$filePath.txt';
@@ -54,12 +54,11 @@ Future<void> saveUserToFile(User user, String filePath) async {
 }
 
 //지정된 경로에 파일을 저장하는 함수 로그인후 기능사용때 활용
-Future<void> saveUserToFileUsing(User user)async{
-  final line = user.toString();
+Future<void> saveUserToFileUsing(String user)async{
   Directory appDocDir = await getApplicationDocumentsDirectory();
     _filePath = '${appDocDir.path}/using.txt';
   File file =File(_filePath);
-  await file.writeAsString(line);
+  await file.writeAsString(user);
 }
 
 //경로를 입력해서 파일에서 데이터를 읽는 함수 로그인 기능 및 회원가입 기능에 사용
@@ -81,10 +80,9 @@ Future<void> readUserFromFileUsing() async {
 }
 
 //각각의 dart파일에서 유저 객체를 다시 만들때 사용
-// ignore: non_constant_identifier_names
-User MakeUser(String loadedUser) {
+Future <void> MakeUser(String loadedUser)async {
   List<String> words = loadedUser.split(' ');
   User uuser = User(words[0], words[1], words[2],words[3],int.parse(words[4]),int.parse(words[5]),int.parse(words[6]),int.parse(words[7]),int.parse(words[8]));
-  return uuser;
+  chuser=uuser;
 }
 

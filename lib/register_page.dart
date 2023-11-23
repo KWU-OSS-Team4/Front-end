@@ -4,23 +4,34 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'User.dart';
 import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+
+String forfuture='';
+late String _filePath;
+
+// ignore: unused_element
+Future<void> initFilePath(String pathname) async {
+    // 애플리케이션의 저장소 디렉토리 경로를 얻기
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    _filePath = '${appDocDir.path}/$pathname.txt';
+    forfuture=_filePath;
+  }
 
 class Register extends StatefulWidget {
   @override
   State<Register> createState() => _RegisterState();
 }
 
-String username = '';
-String userid = '';
-String userpsd = '';
-String usergen = '';
-
-enum Char { M, W }
-
-String _char = 'M';
+String username='';
+String userid='';
+String userpsd='';
+String usergen='';
+enum Char {M,W}
+String _char='M';
 
 class _RegisterState extends State<Register> {
   final TextEditingController _emailController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +87,7 @@ class _RegisterState extends State<Register> {
                         ),
                         keyboardType: TextInputType.text,
                         onChanged: (value) {
-                          username = value;
+                          username=value;
                         },
                       ),
                       TextField(
@@ -94,8 +105,9 @@ class _RegisterState extends State<Register> {
                         keyboardType: TextInputType.emailAddress,
                         controller: _emailController,
                         onChanged: (value) {
-                          userid = value;
+                          userid=value;
                         },
+                        
                       ),
                       TextField(
                         cursorColor: Color.fromARGB(255, 9, 162, 37),
@@ -110,30 +122,11 @@ class _RegisterState extends State<Register> {
                         keyboardType: TextInputType.text,
                         obscureText: true,
                         onChanged: (value) {
-                          userpsd = value;
+                          userpsd=value;
                         },
                       ),
-<<<<<<< HEAD
                 
                       
-=======
-                      Container(
-                        child: Row(children: [
-                          RadioListTile(
-                              value: Char.M,
-                              groupValue: _char,
-                              onChanged: (value) {
-                                _char = 'M';
-                              }),
-                          RadioListTile(
-                              value: Char.W,
-                              groupValue: _char,
-                              onChanged: (value) {
-                                _char = 'W';
-                              })
-                        ]),
-                      ),
->>>>>>> origin/main
                       SizedBox(
                         height: 40.0,
                       ),
@@ -142,12 +135,11 @@ class _RegisterState extends State<Register> {
                         height: 50.0,
                         child: ElevatedButton(
                           onPressed: () {
-                            String filepath = '$userid.txt';
-                            File file = File(filepath);
-                            if (file.existsSync()) {
+                             initFilePath(userid);
+                            File file=File(forfuture);
+                            if(file.existsSync()){
                               //id가 존재하면 아이디가 이미 존재합니다 메세지
                               ScaffoldMessenger.of(context).showSnackBar(
-<<<<<<< HEAD
                       SnackBar(
                        content: Text('아이디가 이미 존재합니다.'),
                       duration: Duration(seconds: 2),
@@ -156,28 +148,10 @@ class _RegisterState extends State<Register> {
                         ),
                           );}else{
                             User newuser=User(userpsd,username,'M','유지',0,0,0,0,0);
-                            
-                            saveUserToFile(newuser, userid);
-                            print(newuser.toString());
+
+                            saveUserToFile(newuser.toString(), userid);
                             Navigator.pop(context);
                           }
-=======
-                                SnackBar(
-                                  content: Text('아이디가 이미 존재합니다.'),
-                                  duration: Duration(seconds: 2),
-                                  backgroundColor:
-                                      Color.fromARGB(255, 9, 162, 37),
-                                  behavior: SnackBarBehavior.floating,
-                                ),
-                              );
-                            } else {
-                              User newuser = User(userpsd, username, _char,
-                                  '유지', 0, 0, 0, 0, 0);
-                              String filepath = '$userid.txt';
-                              saveUserToFile(newuser, filepath);
-                              Navigator.pop(context);
-                            }
->>>>>>> origin/main
                           },
                           child: Text(
                             'Register',

@@ -3,6 +3,18 @@ import 'package:flutter/material.dart';
 import 'navigation.dart';
 import 'register_page.dart';
 import 'User.dart';
+import 'package:path_provider/path_provider.dart';
+
+String forfuture='';
+late String _filePath;
+
+// ignore: unused_element
+Future<void> initFilePath(String pathname) async {
+    // 애플리케이션의 저장소 디렉토리 경로를 얻기
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    _filePath = '${appDocDir.path}/$pathname.txt';
+    forfuture=_filePath;
+  }
 
 class LogIn extends StatefulWidget {
   @override
@@ -13,6 +25,7 @@ String checkid='';
 String checkpsd='';
 
 class _LogInState extends State<LogIn> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,25 +117,14 @@ class _LogInState extends State<LogIn> {
                                 );
                             }else{
                               readUserFromFile(checkid);
-                              User user = MakeUser(forfuture);
-                              if(user.password!=checkpsd){
-                                //id가 존재하지만 password가 다르면 패스워드가 다릅니다 메세지
-                                ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('패스워드가 다릅니다.'),
-          duration: Duration(seconds: 2),
-          backgroundColor: Color.fromARGB(255, 9, 162, 37),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-                              }else{
+                              saveUserToFileUsing(forfuture);
                                  //존재하고 paswword 도 같으면 로그인
                               Navigator.push(
                               context,
                               MaterialPageRoute(builder: (_) => Navigation()),
                             );
 
-                              }
+                              
                             }
                            
                           },
