@@ -5,6 +5,12 @@ class Showdiet extends StatefulWidget{
   @override
   State<Showdiet> createState()=>_Showdiet();
 }
+int carbong=250;
+int proteing=150;
+int fatg=44;
+int carbonk =1000;
+int proteink=600;
+int fatk=400;
 
 class _Showdiet extends State<Showdiet>{
   @override
@@ -55,12 +61,12 @@ class _Showdiet extends State<Showdiet>{
             color: Color.fromARGB(50, 0, 0, 0),
             borderRadius: BorderRadius.all(Radius.circular(25))
           ),
-          child: Text("000g",style: TextStyle(fontSize: 30,fontWeight: FontWeight.w500),),
+          child: Text("$carbong g",style: TextStyle(fontSize: 30,fontWeight: FontWeight.w500),),
         ),
         SizedBox(width: 10,),
         Icon(Icons.arrow_forward,size: 30,),
         SizedBox(width: 10,),
-        Text("000Kcal",style: TextStyle(fontSize: 30,fontWeight: FontWeight.w500),)
+        Text("$carbonk Kcal",style: TextStyle(fontSize: 30,fontWeight: FontWeight.w500),)
           ]),
         ),
         //단백질
@@ -76,12 +82,12 @@ class _Showdiet extends State<Showdiet>{
             color: Color.fromARGB(50, 0, 0, 0),
             borderRadius: BorderRadius.all(Radius.circular(25))
           ),
-          child: Text("000g",style: TextStyle(fontSize: 30,fontWeight: FontWeight.w500),),
+          child: Text("$proteing g",style: TextStyle(fontSize: 30,fontWeight: FontWeight.w500),),
         ),
         SizedBox(width: 10,),
         Icon(Icons.arrow_forward,size: 30,),
         SizedBox(width: 10,),
-        Text("000Kcal",style: TextStyle(fontSize: 30,fontWeight: FontWeight.w500),)
+        Text("$proteink Kcal",style: TextStyle(fontSize: 30,fontWeight: FontWeight.w500),)
           ]),
         ),
         //지방
@@ -97,12 +103,12 @@ class _Showdiet extends State<Showdiet>{
             color: Color.fromARGB(50, 0, 0, 0),
             borderRadius: BorderRadius.all(Radius.circular(25))
           ),
-          child: Text("000g",style: TextStyle(fontSize: 30,fontWeight: FontWeight.w500),),
+          child: Text("$fatg g",style: TextStyle(fontSize: 30,fontWeight: FontWeight.w500),),
         ),
         SizedBox(width: 10,),
         Icon(Icons.arrow_forward,size: 30,),
         SizedBox(width: 10,),
-        Text("000Kcal",style: TextStyle(fontSize: 30,fontWeight: FontWeight.w500),)
+        Text("$fatk Kcal",style: TextStyle(fontSize: 30,fontWeight: FontWeight.w500),)
           ]),
         ),
         //식단추천버튼

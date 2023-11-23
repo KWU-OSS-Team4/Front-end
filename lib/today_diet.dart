@@ -43,7 +43,7 @@ class _Todaydiet extends State<Todaydiet>{
                   color: Color.fromARGB(50, 0, 0, 0),
                   borderRadius: BorderRadius.all(Radius.circular(25))
                 ),
-                child: Text("맛있는 햄버거"),
+                child: Text("고구마 2개 + 닭가슴살 100g + 야채샐러드"),
               ),
               SizedBox(height: 30,),
               Container(
@@ -54,7 +54,7 @@ class _Todaydiet extends State<Todaydiet>{
                   color: Color.fromARGB(50, 0, 0, 0),
                   borderRadius: BorderRadius.all(Radius.circular(25))
                 ),
-                child: Text("맛있는 치킨"),
+                child: Text("닭가슴살 200g + 야채 샐러드"),
               ),
               SizedBox(height: 30),
               Container(
@@ -65,7 +65,7 @@ class _Todaydiet extends State<Todaydiet>{
                   color: Color.fromARGB(50, 0, 0, 0),
                   borderRadius: BorderRadius.all(Radius.circular(25))
                 ),
-                child: Text("맛있는 국밥"),
+                child: Text("흑미 차조밥 1/2공기, 재첩 맑은 국, 꽈리고추찜, 아삭이고추 양파무침, 김 실파무침, 배추김치"),
               )
             ]),
           )

@@ -1,13 +1,18 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'feedback.dart';
 import 'User.dart';
+import 'package:path_provider/path_provider.dart';
 
+int uheight=0;
+int uweight=0;
 class MainPage extends StatefulWidget {
   @override
   State<MainPage> createState() => _MainPageState();
 }
+
 
 class _MainPageState extends State<MainPage> {
   Duration duration = const Duration(hours: 1, minutes: 23);
@@ -16,13 +21,12 @@ class _MainPageState extends State<MainPage> {
   double _height = 0.0;
   int _hour = 12;
   int _min = 59;
-  double _carboHydrate = 0.0;
-  double _protein = 0.0;
-  double _fat = 0.0;
+  double _carboHydrate = 1000;
+  double _protein = 600;
+  double _fat = 400;
   int numSuccess = 0;
   int numFail = 0;
-
-  String using= readUserFromFileUsing();
+  
 
   List<Color> gradientColors = [
     Color.fromARGB(255, 9, 162, 37),
@@ -121,7 +125,7 @@ class _MainPageState extends State<MainPage> {
                               ),
                             ),
                             Text(
-                              'kcal',
+                              '${chuser.todaykcal} kcal',
                               style: TextStyle(
                                 fontFamily: 'godo',
                                 fontSize: 17.0,
@@ -230,7 +234,7 @@ class _MainPageState extends State<MainPage> {
             child: Column(
               children: [
                 Text(
-                  '성공: $numSuccess  |  실패: $numFail',
+                  '성공: ${chuser.success}  |  실패: ${chuser.fail}',
                   style: TextStyle(
                     fontFamily: 'godo',
                     fontSize: 17.0,
@@ -371,14 +375,14 @@ class _MainPageState extends State<MainPage> {
                               .center, // 이게 Text()들을 수직방향으로 중앙 정렬
                           children: [
                             Text(
-                              '몸무게: $_weight',
+                              '몸무게: ${chuser.weight}',
                               style: TextStyle(
                                 fontFamily: 'godo',
                                 fontSize: 17.0,
                               ),
                             ),
                             Text(
-                              '신장: $_height',
+                              '신장: ${chuser.height}',
                               style: TextStyle(
                                 fontFamily: 'godo',
                                 fontSize: 17.0,
@@ -411,7 +415,7 @@ class _MainPageState extends State<MainPage> {
                     child: Column(
                       children: [
                         Text(
-                          'Diet Here',
+                          '답이없다',
                           style: TextStyle(
                             fontFamily: 'godo',
                             fontSize: 17.0,
@@ -568,6 +572,9 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ),
                   keyboardType: TextInputType.emailAddress,
+                  onChanged: (value) {
+                    uweight=int.parse(value);
+                  },
                 ),
                 TextField(
                   cursorColor: Color.fromARGB(255, 9, 162, 37),
@@ -585,6 +592,9 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ),
                   keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    uheight=int.parse(value);
+                  },
                 ),
               ],
             ),
@@ -599,6 +609,10 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
                 onPressed: () {
+                  readUserFromFileUsing();
+                  MakeUser(forfuture);
+                  chuser.height=uheight;
+                  chuser.weight=uweight;
                   Navigator.pop(context);
                 },
               ),

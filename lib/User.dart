@@ -21,7 +21,8 @@ class User {
 }
 String forfuture='';
 late String _filePath;
-User chuser=User('','','','',0,0,0,0,0);
+User chuser=User('1234','witheat','M','감량',175,65,5,2,2000);
+
 // ignore: unused_element
 Future<void> initFilePath(String pathname) async {
     // 애플리케이션의 저장소 디렉토리 경로를 얻기

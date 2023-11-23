@@ -5,6 +5,7 @@ import 'Calender.dart';
 import 'Diet.dart';
 import 'alarm.dart';
 import 'main_page.dart';
+import 'User.dart';
 
 class Navigation extends StatefulWidget {
   @override
@@ -39,6 +40,7 @@ class _NavigationState extends State<Navigation> {
         ),
         onTap: (int index) => setState(() {
           if (index == 4) {
+            
             showCupertinoModalPopup(
               context: context,
               builder: (BuildContext context) {
