@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -114,23 +113,8 @@ class _RegisterState extends State<Register> {
                           userpsd=value;
                         },
                       ),
-                      Container(
-                        child: Row(children: [
-                            RadioListTile(value: Char.M, 
-                            groupValue: _char, 
-                            onChanged: (value) {
-                              _char='M';
-                            }
-                            ),
-                             RadioListTile(value: Char.W, 
-                            groupValue: _char, 
-                            onChanged: (value) {
-                              _char='W';
-                            }
-                            )
-                        ]),
-                      )
-                      ,
+                
+                      
                       SizedBox(
                         height: 40.0,
                       ),
@@ -151,9 +135,10 @@ class _RegisterState extends State<Register> {
                       behavior: SnackBarBehavior.floating,
                         ),
                           );}else{
-                            User newuser=User(userpsd,username,_char,'유지',0,0,0,0,0);
-                            String filepath='$userid.txt';
-                            saveUserToFile(newuser, filepath);
+                            User newuser=User(userpsd,username,'M','유지',0,0,0,0,0);
+                            
+                            saveUserToFile(newuser, userid);
+                            print(newuser.toString());
                             Navigator.pop(context);
                           }
                           },

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'navigation.dart';
 import 'register_page.dart';
@@ -91,22 +90,21 @@ class _LogInState extends State<LogIn> {
                         height: 50.0,
                         child: ElevatedButton(
                           onPressed: () {
-                            String filepath='$checkid.txt';
-                            File file=File(filepath);
+                            initFilePath(checkid);
+                            File file=File(forfuture);//forfuture에 파일주소
                             if(file.existsSync()==0){
                               //id가 존재하지 않으면 아이디가 존재하지 않습니다 메세지
                               ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('아이디가 존재하지 않습니다.'),
-          duration: Duration(seconds: 2),
-          backgroundColor: Color.fromARGB(255, 9, 162, 37),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
+                               SnackBar(
+                                content: Text('아이디가 존재하지 않습니다.'),
+                                duration: Duration(seconds: 2),
+                                backgroundColor: Color.fromARGB(255, 9, 162, 37),
+                                 behavior: SnackBarBehavior.floating,
+                                ),
+                                );
                             }else{
-                              String line='';
-                              line= readUserFromFile(filepath);
-                              User user = MakeUser(line);
+                              readUserFromFile(checkid);
+                              User user = MakeUser(forfuture);
                               if(user.password!=checkpsd){
                                 //id가 존재하지만 password가 다르면 패스워드가 다릅니다 메세지
                                 ScaffoldMessenger.of(context).showSnackBar(
