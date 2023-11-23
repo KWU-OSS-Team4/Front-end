@@ -6,6 +6,7 @@ class Feedbacks extends StatefulWidget{
 }
 
 class _Feedback extends State<Feedbacks>{
+  
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -47,6 +48,10 @@ class _Feedback extends State<Feedbacks>{
                   decoration: InputDecoration(labelText: '탄수화물'),
                   keyboardType: TextInputType.text,
                   obscureText: true,
+                  onChanged: (value) {
+
+                  }, 
+                  
                 ),TextField(
                   decoration: InputDecoration(labelText: '단백질'),
                   keyboardType: TextInputType.text,

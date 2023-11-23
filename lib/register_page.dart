@@ -1,41 +1,26 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'dart:async';
-import 'dart:convert';
+import 'User.dart';
+import 'dart:io';
 
 class Register extends StatefulWidget {
   @override
   State<Register> createState() => _RegisterState();
 }
 
+String username='';
+String userid='';
+String userpsd='';
+String usergen='';
+enum Char {M,W}
+String _char='M';
+
 class _RegisterState extends State<Register> {
   final TextEditingController _emailController = TextEditingController();
 
-  bool isEmailDuplicated = false;
-
-  // 이메일 중복 검사 함수
-  void validateEmail(String email) {
-    // 서버 연결 보고
-    // 일단 지금은 문장에 'a'가 들어가면 중복으로 간주
-    bool isDuplicated = email.contains('a');
-
-    setState(() {
-      isEmailDuplicated = isDuplicated;
-    });
-
-    if (isDuplicated) {
-      // Show a Snackbar message if the email is duplicated
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Email is already registered.'),
-          duration: Duration(seconds: 2),
-          backgroundColor: Color.fromARGB(255, 9, 162, 37),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,13 +75,16 @@ class _RegisterState extends State<Register> {
                           ),
                         ),
                         keyboardType: TextInputType.text,
+                        onChanged: (value) {
+                          username=value;
+                        },
                       ),
                       TextField(
                         // 이메일 중복 확인을 버튼을 누르는 식으로 할 지
                         // 사용자가 이메일 입력을 완료하면 알아서 중복 확인 후 메시지 띄울 지
                         cursorColor: Color.fromARGB(255, 9, 162, 37),
                         decoration: InputDecoration(
-                          labelText: 'Enter Email',
+                          labelText: 'Enter Id',
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color.fromARGB(255, 9, 162, 37),
@@ -105,7 +93,10 @@ class _RegisterState extends State<Register> {
                         ),
                         keyboardType: TextInputType.emailAddress,
                         controller: _emailController,
-                        onChanged: validateEmail,
+                        onChanged: (value) {
+                          userid=value;
+                        },
+                        
                       ),
                       TextField(
                         cursorColor: Color.fromARGB(255, 9, 162, 37),
@@ -119,7 +110,27 @@ class _RegisterState extends State<Register> {
                         ),
                         keyboardType: TextInputType.text,
                         obscureText: true,
+                        onChanged: (value) {
+                          userpsd=value;
+                        },
                       ),
+                      Container(
+                        child: Row(children: [
+                            RadioListTile(value: Char.M, 
+                            groupValue: _char, 
+                            onChanged: (value) {
+                              _char='M';
+                            }
+                            ),
+                             RadioListTile(value: Char.W, 
+                            groupValue: _char, 
+                            onChanged: (value) {
+                              _char='W';
+                            }
+                            )
+                        ]),
+                      )
+                      ,
                       SizedBox(
                         height: 40.0,
                       ),
@@ -127,7 +138,25 @@ class _RegisterState extends State<Register> {
                         minWidth: 100.0,
                         height: 50.0,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                             String filepath='$userid.txt';
+                            File file=File(filepath);
+                            if(file.existsSync()){
+                              //id가 존재하면 아이디가 이미 존재합니다 메세지
+                              ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                       content: Text('아이디가 이미 존재합니다.'),
+                      duration: Duration(seconds: 2),
+                      backgroundColor: Color.fromARGB(255, 9, 162, 37),
+                      behavior: SnackBarBehavior.floating,
+                        ),
+                          );}else{
+                            User newuser=User(userpsd,username,_char,'유지',0,0,0,0,0);
+                            String filepath='$userid.txt';
+                            saveUserToFile(newuser, filepath);
+                            Navigator.pop(context);
+                          }
+                          },
                           child: Text(
                             'Register',
                             style: TextStyle(
